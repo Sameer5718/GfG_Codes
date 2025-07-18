@@ -2,32 +2,34 @@
 
 class Solution {
   public:
-bool check(vector<int>&stalls, int k, int dist){
-    int cnt = 1;
-    int prev = stalls[0];
-    for(int i = 1; i<stalls.size(); i++){
-        if(stalls[i]-prev>=dist){
-            cnt++;
-            prev = stalls[i];
+bool isValid(vector<int>&arr, int k, int mid){
+    int n = arr.size();
+    int lp = arr[0];
+    int cp = 1;
+    for(int i = 1; i<n; i++){
+        if(arr[i]-lp>=mid){
+            lp = arr[i];
+            cp++;
         }
     }
-    return (cnt>=k);
+    return cp>=k;
 }
-    int aggressiveCows(vector<int> &stalls, int k) {
+    int aggressiveCows(vector<int> &stall, int k) {
 
         // Write your code here
-        sort(stalls.begin(), stalls.end());
+        sort(stall.begin(),stall.end());
+        int n = stall.size();
         int lo = 1;
-        int hi = stalls.back()-stalls[0];
-        int res = 0;
+        int hi = stall[n-1]-stall[0];
+        int m = INT_MAX;
         while(lo<=hi){
             int mid = lo+(hi-lo)/2;
-            if(check(stalls, k, mid)){
-                res = mid;
+            if(isValid(stall, k, mid)){
+                m = mid;
                 lo = mid+1;
             }
             else hi = mid-1;
         }
-        return res;
+        return m;
     }
 };
